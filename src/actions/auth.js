@@ -16,16 +16,10 @@ export const logout = () => {
     }
 }
 
-export const registerAction = (message) => {
+export const registerAction = (registerSuccess) => {
     return {
         type: 'REGISTER',
-        message
-    }
-}
-
-export const registerNavigate = () => {
-    return {
-        type: 'REGISTER_NAVIGATE'
+        registerSuccess
     }
 }
 
@@ -64,7 +58,7 @@ export const register = (user) => {
                     dispatch(hasErrored({ message: response.message }));
                 }
                 else {
-                    dispatch(registerAction(response));
+                    dispatch(registerAction(true));
                 }
             }).catch(error => {
                 console.log(error);

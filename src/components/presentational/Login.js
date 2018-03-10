@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
     View,
     TextInput,
-    Button,
     ActivityIndicator,
     Alert,
     Text

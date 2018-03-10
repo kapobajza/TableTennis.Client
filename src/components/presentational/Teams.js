@@ -8,7 +8,6 @@ import {
 
 export default class Teams extends Component {
     static propTypes = {
-        logout: PropTypes.func.isRequired,
         isLoading: PropTypes.bool.isRequired,
         hasErrored: PropTypes.object.isRequired
     }
@@ -17,10 +16,6 @@ export default class Teams extends Component {
         return (
             <View>
                 <Text>This is Teams screen.</Text>
-                <Button
-                    title='Log out'
-                    onPress={() => this.props.logout()}
-                />
             </View>
         );
     }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
     View,
     TextInput,
-    Button,
     ActivityIndicator,
     Alert,
     Text
@@ -17,7 +16,9 @@ export default class Register extends Component {
         isLoading: PropTypes.bool.isRequired,
         hasErrored: PropTypes.object.isRequired,
         clearError: PropTypes.func.isRequired,
-        registerMessage: PropTypes.string.isRequired
+        registerSuccess: PropTypes.bool.isRequired,
+        clearRegisterSuccess: PropTypes.func.isRequired,
+        goToLogin: PropTypes.func.isRequired
     }
 
     constructor(props) {
@@ -48,15 +49,31 @@ export default class Register extends Component {
         });
     }
 
+    _returnToLogin() {
+        this.props.clearRegisterSuccess();
+        this.props.goToLogin();
+    }
+
     render() {
         const error = this.props.hasErrored;
-        if(error.message) {
+        if (error.message) {
             Alert.alert('Error', 'Error: ' + error.message);
             this.props.clearError();
         }
 
-        if(this.props.registerMessage) {
-            Alert.alert('Success', registerMessage);
+        if (this.props.registerSuccess) {
+            Alert.alert(
+                'Success',
+                'You have successfully registered.',
+                [
+                    {
+                        text: 'Ok', onPress: () => this._returnToLogin()
+                    }
+                ],
+                {
+                    onDismiss: () => this._returnToLogin()
+                }
+            );
         }
 
         return (
@@ -92,7 +109,7 @@ export default class Register extends Component {
                 />
                 {
                     this.props.isLoading ?
-                        <ActivityIndicator size="large" style={{marginTop: 10}} /> : null
+                        <ActivityIndicator size="large" style={{ marginTop: 10 }} /> : null
                 }
             </View>
         );

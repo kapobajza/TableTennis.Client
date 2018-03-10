@@ -3,7 +3,7 @@ const initialState = {
         userName: '',
         token: ''
     },
-    registerMessage: ''
+    registerSuccess: false
 }
 
 const auth = (state = initialState, action) => {
@@ -29,7 +29,7 @@ const auth = (state = initialState, action) => {
         case "REGISTER":
             return {
                 ...state,
-                registerMessage: action.message
+                registerSuccess: action.registerSuccess
             };
 
         default:
