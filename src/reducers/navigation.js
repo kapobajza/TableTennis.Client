@@ -2,10 +2,15 @@ import { NavigationActions } from 'react-navigation';
 import AppNavigator from '../navigation/routes';
 
 const ActionForLoggedOut = AppNavigator.router.getActionForPathAndParams("login");
-const ActionForLoggedIn = AppNavigator.router.getActionForPathAndParams("mainScreen");
+// const ActionForLoggedIn = AppNavigator.router.getActionForPathAndParams("mainScreen"); // returning null
+const ActionForLoggedIn = {
+    type: 'Navigation/NAVIGATE',
+    routeName: 'mainScreen'
+}
 
 const stateForLoggedOut = AppNavigator.router.getStateForAction(ActionForLoggedOut);
 const stateForLoggedIn = AppNavigator.router.getStateForAction(ActionForLoggedIn);
+
 const initialState = { stateForLoggedOut, stateForLoggedIn };
 
 const navigation = (state = initialState, action) => {
@@ -19,12 +24,7 @@ const navigation = (state = initialState, action) => {
         case "LOGOUT":
             return {
                 ...state,
-                stateForLoggedOut: AppNavigator.router.getStateForAction(
-                    NavigationActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: "login" })]
-                    })
-                )
+                stateForLoggedOut: AppNavigator.router.getStateForAction(ActionForLoggedOut)
             };
 
         case "REGISTER_NAVIGATE":
@@ -44,7 +44,25 @@ const navigation = (state = initialState, action) => {
                     stateForLoggedOut
                 )
             };
-            
+
+        case "MATCHES_NAVIGATE":
+            return {
+                ...state,
+                stateForLoggedIn: AppNavigator.router.getStateForAction(
+                    AppNavigator.router.getActionForPathAndParams("mainScreen/matches"),
+                    stateForLoggedIn
+                )
+            };
+
+        case "TEAMS_NAVIGATE":
+            return {
+                ...state,
+                stateForLoggedIn: AppNavigator.router.getStateForAction(
+                    AppNavigator.router.getActionForPathAndParams("mainScreen/teams"),
+                    stateForLoggedIn
+                )
+            };
+
         default:
             return {
                 ...state,

@@ -1,6 +1,5 @@
 import Teams from '../presentational/Teams';
 import { connect } from 'react-redux';
-import { logout } from '../../actions/auth';
 
 const mapStateToProps = (state) => {
     return { 
@@ -11,7 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logout: () => dispatch(logout())
+
     }
 }
 

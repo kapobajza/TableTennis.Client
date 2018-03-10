@@ -9,6 +9,7 @@ import styles from '../../styles/global';
 const CustomButton = ({ style, title, ...rest }) => (
     <TouchableOpacity
         style={[styles.button, style]}
+        activeOpacity={0.35}
         {...rest}
     >
         <Text style={{ color: 'white' }}>

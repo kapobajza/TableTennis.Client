@@ -1,6 +1,7 @@
 import Login from '../presentational/Login';
 import { connect } from 'react-redux';
-import { login, registerNavigate } from '../../actions/auth';
+import { login } from '../../actions/auth';
+import { registerNavigate } from '../../actions/navigation';
 import { clearError } from '../../actions/global';
 
 const mapStateToProps = (state) => {
