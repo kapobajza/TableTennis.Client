@@ -106,6 +106,7 @@ export default class Register extends Component {
                         })
                     }
                     style={styles.button}
+                    disabled={this.props.isLoading}
                 />
                 {
                     this.props.isLoading ?

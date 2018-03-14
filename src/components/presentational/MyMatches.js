@@ -14,7 +14,7 @@ export default class Matches extends Component {
     render() {
         return (
             <View>
-                <Text>This is Matches screen.</Text>
+                <Text>This is My matches screen.</Text>
             </View>
         );
     }

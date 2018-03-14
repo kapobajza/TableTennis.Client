@@ -6,10 +6,11 @@ import {
 import PropTypes from 'prop-types';
 import styles from '../../styles/global';
 
-const CustomButton = ({ style, title, ...rest }) => (
+const CustomButton = ({ style, title, disabled, ...rest }) => (
     <TouchableOpacity
         style={[styles.button, style]}
         activeOpacity={0.35}
+        disabled={disabled}
         {...rest}
     >
         <Text style={{ color: 'white' }}>
@@ -20,8 +21,8 @@ const CustomButton = ({ style, title, ...rest }) => (
 
 CustomButton.propTypes = {
     style: Text.propTypes.style,
-    children: PropTypes.node,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    disabled: PropTypes.bool
 }
 
 export default CustomButton;

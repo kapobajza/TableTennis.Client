@@ -1,7 +1,8 @@
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, TabNavigator } from 'react-navigation';
 import LoginContainer from '../components/containers/LoginContainer';
 import TeamsContainer from '../components/containers/TeamsContainer';
 import MatchesContainer from '../components/containers/MatchesContainer';
+import MyMatchesContainer from '../components/containers/MyMatchesContainer';
 import RegisterContainer from '../components/containers/RegisterContainer';
 import DrawerContainer from '../components/containers/DrawerContainer';
 import React from 'react';
@@ -16,27 +17,27 @@ const DrawerStack = DrawerNavigator({
             title: 'Welcome'
         }
     },
-    matches: { 
-        screen: MatchesContainer,
+    matches: {
+        screen: MyMatchesContainer,
         navigationOptions: {
-            title: 'Your matches'
+            title: 'Matches you have played'
         }
     }
 }, {
-    gesturesEnabled: false,
-    contentComponent: DrawerContainer
-});
+        gesturesEnabled: false,
+        contentComponent: DrawerContainer
+    });
 
 const drawerButton = (navigation) =>
     <Text
         style={{ padding: 15, color: 'white' }}
         onPress={() => {
-                if (navigation.state.index === 0) {
-                    navigation.navigate('DrawerOpen')
-                } else {
-                    navigation.navigate('DrawerClose')
-                }
+            if (navigation.state.index === 0) {
+                navigation.navigate('DrawerOpen')
+            } else {
+                navigation.navigate('DrawerClose')
             }
+        }
         }>
         Menu
     </Text>
@@ -51,14 +52,16 @@ const navigator = StackNavigator({
     register: {
         screen: RegisterContainer,
         navigationOptions: {
-            title: 'Register'
+            title: 'Register',
+            headerStyle: { backgroundColor: '#592f93' },
+            headerTintColor: 'white',
         }
     },
     mainScreen: {
         screen: DrawerStack,
         headerMode: 'float',
         navigationOptions: ({ navigation }) => ({
-            headerStyle: { backgroundColor: '#4C3E54' },
+            headerStyle: { backgroundColor: '#592f93' },
             headerTintColor: 'white',
             gesturesEnabled: false,
             headerLeft: drawerButton(navigation)
