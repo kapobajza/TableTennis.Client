@@ -2,11 +2,12 @@ import { isLoading, hasErrored } from './global';
 import Api from '../util/Api';
 import { Buffer } from 'buffer';
 
-export const loginAction = (userName, token) => {
+export const loginAction = (userName, token, teams) => {
     return {
         type: 'LOGIN',
         userName,
-        token
+        token,
+        teams
     }
 }
 
@@ -31,12 +32,12 @@ export const login = (user) => {
         return Api.post('account/login', null, 'Basic ' + credentials)
             .then(response => {
                 dispatch(isLoading(false));
-                //console.log(response);
+                
                 if (response.message) {
                     dispatch(hasErrored({ message: response.message }));
                 }
                 else {
-                    dispatch(loginAction(user.userName, response));
+                    dispatch(loginAction(user.userName, response.Token, response.Teams));
                 }
             }).catch(error => {
                 console.log(error);

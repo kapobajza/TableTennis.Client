@@ -4,6 +4,7 @@ import {
     View,
     Text
 } from 'react-native';
+import MenuItem from '../helper/MenuItem';
 
 export default class Login extends Component {
     static propTypes = {
@@ -19,25 +20,22 @@ export default class Login extends Component {
             <View>
                 {
                     activeItem !== 'matches' ?
-                        <Text
-                            onPress={() => this.props.navigateToMatches()}
-                        >
-                            Matches
-                        </Text> : null
+                        <MenuItem
+                            title='Matches'
+                            navigateTo={this.props.navigateToMatches}
+                        /> : null
                 }
                 {
                     activeItem !== 'teams' ?
-                        <Text
-                            onPress={() => this.props.navigateToTeams()}
-                        >
-                            Teams
-                        </Text> : null
+                        <MenuItem
+                            title='Teams'
+                            navigateTo={this.props.navigateToTeams}
+                        /> : null
                 }
-                <Text
-                    onPress={() => this.props.logout()}
-                >
-                    Log out
-                </Text>
+                <MenuItem
+                    title='Log out'
+                    navigateTo={this.props.logout}
+                />
             </View>
         );
     }

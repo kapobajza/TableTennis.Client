@@ -1,4 +1,4 @@
-import Matches from '../presentational/Matches';
+import MyMatches from '../presentational/MyMatches';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Matches);
+)(MyMatches);

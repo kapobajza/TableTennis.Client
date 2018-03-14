@@ -1,7 +1,8 @@
 const initialState = {
     user: {
         userName: '',
-        token: ''
+        token: '',
+        teams: []
     },
     registerSuccess: false
 }
@@ -13,7 +14,8 @@ const auth = (state = initialState, action) => {
                 ...state,
                 user: {
                     userName: action.userName,
-                    token: action.token
+                    token: action.token,
+                    teams: action.teams
                 }
             };
 
@@ -22,7 +24,8 @@ const auth = (state = initialState, action) => {
                 ...state,
                 user: {
                     userName: '',
-                    token: ''
+                    token: '',
+                    teams: []
                 }
             };
 

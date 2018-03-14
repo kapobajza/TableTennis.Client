@@ -46,6 +46,7 @@ export default class Login extends Component {
             Alert.alert('Error', 'Error: ' + error.message);
             this.props.clearError();
         }
+
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Table Tennis match maker</Text>
@@ -63,18 +64,21 @@ export default class Login extends Component {
                 <View style={styles.buttonsContainer}>
                     <CustomButton
                         onPress={() => {
-                            this.props.login({
-                                userName: this.state.username,
-                                password: this.state.password
-                            })
-                        }}
+                                this.props.login({
+                                    userName: this.state.username,
+                                    password: this.state.password
+                                });
+                            }
+                        }
                         title='Login'
                         style={styles.button}
+                        disabled={this.props.isLoading}
                     />
                     <CustomButton
                         onPress={() => this.props.goToRegister()}
                         title='Register'
                         style={styles.button}
+                        disabled={this.props.isLoading}
                     />
                 </View>
                 {
