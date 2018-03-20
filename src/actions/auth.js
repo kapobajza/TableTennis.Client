@@ -2,9 +2,10 @@ import { isLoading, hasErrored } from './global';
 import Api from '../util/Api';
 import { Buffer } from 'buffer';
 
-export const loginAction = (userName, token, teams) => {
+export const loginAction = (userId, userName, token, teams) => {
     return {
         type: 'LOGIN',
+        userId,
         userName,
         token,
         teams
@@ -24,6 +25,13 @@ export const registerAction = (registerSuccess) => {
     }
 }
 
+export const addTeamToUser = (team) => {
+    return {
+        type: 'ADD_TEAM_TO_USER',
+        team
+    }
+}
+
 export const login = (user) => {
     return (dispatch) => {
         dispatch(isLoading(true));
@@ -32,12 +40,12 @@ export const login = (user) => {
         return Api.post('account/login', null, 'Basic ' + credentials)
             .then(response => {
                 dispatch(isLoading(false));
-                
+
                 if (response.message) {
                     dispatch(hasErrored({ message: response.message }));
                 }
                 else {
-                    dispatch(loginAction(user.userName, response.Token, response.Teams));
+                    dispatch(loginAction(response.UserId, user.userName, response.Token, response.Teams));
                 }
             }).catch(error => {
                 console.log(error);

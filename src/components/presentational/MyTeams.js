@@ -1,52 +1,100 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-    Text,
-    Button,
     View,
-    Alert,
     FlatList,
     ActivityIndicator,
-    RefreshControl
+    Alert
 } from 'react-native';
-import CustomText from '../helper/CustomText';
-import CustomButton from '../helper/CustomButton';
-import styles from '../../styles/teams';
+import teamStyles from '../../styles/teams';
 import TeamCell from '../helper/TeamCell';
 import AddTeamModal from '../helper/AddTeamModal';
 
-export default class Teams extends Component {
+export default class MyTeams extends Component {
     static propTypes = {
         isLoading: PropTypes.bool.isRequired,
         hasErrored: PropTypes.object.isRequired,
-        myTeams: PropTypes.array.isRequired,
-        getTeams: PropTypes.func.isRequired,
-        user: PropTypes.object.isRequired,
-        teams: PropTypes.object.isRequired,
         clearError: PropTypes.func.isRequired,
         addTeam: PropTypes.func.isRequired,
-        addTeamToUser: PropTypes.func.isRequired
+        addTeamToUser: PropTypes.func.isRequired,
+        user: PropTypes.object.isRequired,
+        teams: PropTypes.object.isRequired,
+        getMyTeams: PropTypes.func.isRequired
     }
 
     constructor(props) {
         super(props);
 
         this.state = {
-            itemsNr: 0,
-            teams: [],
-            hasTeam: this.props.myTeams.length <= 0 ? false : true
+            myTeams: [],
+            hasTeam: this.props.user.teams.length <= 0 ? false : true
         }
     }
 
     componentWillMount() {
-        this._getTeams();
+        this._getMyTeams();
     }
 
-    _getTeams() {
-        this.props.getTeams(this.state.itemsNr, 10, this.props.user.token, this.props.user.userId).then(resp => {
+    _getMyTeams() {
+        this.props.getMyTeams(this.props.user.userId, this.props.user.token).then(resp => {
             this.setState({
-                teams: [...this.state.teams, ...this.props.teams.allTeams]
+                myTeams: [
+                    ...this.state.myTeams,
+                    ...this.props.teams.myTeams
+                ]
             });
+        });
+    }
+
+    _renderHeader() {
+        return (
+            <AddTeamModal
+                text={this.state.hasTeam ? "You can add a new team if you want" : "It seems like you don't have a team, you can add a new one"}
+                onPress={this._addTeam}
+            />
+        );
+    }
+
+    _renderSeparator() {
+        return (
+            <View
+                style={teamStyles.separator}
+            />
+        );
+    }
+
+    _handleRefresh() {
+        this.setState({
+            myTeams: []
+        }, () => {
+            this._getMyTeams()
+        });
+    }
+
+    _addTeam = (teamName) => {
+        team = {
+            teamName: teamName,
+            userId: this.props.user.userId
+        };
+
+        this.props.addTeam(team, this.props.user.token).then(resp => {
+            console.log(this.props.teams.addedTeam);
+            this.setState({
+                hasTeam: true,                
+                myTeams: [
+                    ...this.state.myTeams, {
+                        Team: this.props.teams.addedTeam,
+                        Users: [ 
+                            {
+                                UserId: this.props.user.userId,
+                                UserName: this.props.user.userName
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            this.props.addTeamToUser(this.props.teams.addedTeam);
         });
     }
 
@@ -54,59 +102,9 @@ export default class Teams extends Component {
         return (
             <TeamCell
                 data={rowData}
-                buttonText="Join team"
+                buttonText="Leave team"
             />
         );
-    }
-
-    _reachedEnd() {
-        this.setState({
-            itemsNr: this.state.itemsNr + 10
-        }, () => {
-            this._getTeams();
-        });
-    }
-
-    _handleRefresh() {
-        this.setState({
-            itemsNr: 0,
-            teams: []
-        }, () => {
-            this._getTeams()
-        });
-    }
-
-    _renderSeparator() {
-        return (
-            <View
-                style={styles.separator}
-            />
-        );
-    }
-
-    _renderHeader() {
-        return !this.state.hasTeam ?
-            (
-                <AddTeamModal
-                    text="It seems like you don't have a team, you can make a new team or join an existing one"
-                    onPress={this._addTeam}
-                />
-            ) : null;
-    }
-
-    _addTeam = (teamName) => {
-        team = {
-            teamName: teamName,
-            userId: this.props.user.userId            
-        };
-        
-        this.props.addTeam(team, this.props.user.token).then(resp => {
-            this.setState({
-                hasTeam: true
-            });
-
-            this.props.addTeamToUser(this.props.teams.addedTeam);
-        });
     }
 
     render() {
@@ -121,17 +119,15 @@ export default class Teams extends Component {
             <View>
                 <FlatList
                     ListHeaderComponent={() => this._renderHeader()}
-                    data={this.state.teams}
+                    data={this.state.myTeams}
                     renderItem={({ item }) => this._renderRowData(item)}
                     keyExtractor={(item) => item.Team.TeamId.toString()}
-                    onEndReached={() => this._reachedEnd()}
-                    onEndReachedThreshold={0.5}
                     onRefresh={() => this._handleRefresh()}
                     refreshing={this.props.isLoading}
                     ItemSeparatorComponent={() => this._renderSeparator()}
                 />
                 {
-                    this.props.isLoading ? 
+                    this.props.isLoading ?
                         <ActivityIndicator size="large" style={{ margin: 10 }} /> : null
                 }
             </View>

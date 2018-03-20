@@ -1,5 +1,6 @@
 const initialState = {
     user: {
+        userId: 0,
         userName: '',
         token: '',
         teams: []
@@ -13,6 +14,7 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 user: {
+                    userId: action.userId,
                     userName: action.userName,
                     token: action.token,
                     teams: action.teams
@@ -26,7 +28,8 @@ const auth = (state = initialState, action) => {
                     userName: '',
                     token: '',
                     teams: []
-                }
+                },
+                registerSuccess: false
             };
 
         case "REGISTER":
@@ -34,6 +37,18 @@ const auth = (state = initialState, action) => {
                 ...state,
                 registerSuccess: action.registerSuccess
             };
+
+        case "ADD_TEAM_TO_USER":
+            return {
+                ...state,
+                user: { 
+                    ...state.user,
+                    teams: [
+                        ...state.user.teams,
+                        action.team
+                    ]
+                }
+            }
 
         default:
             return state;

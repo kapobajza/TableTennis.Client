@@ -15,3 +15,9 @@ export const teamsNavigate = () => {
         type: 'TEAMS_NAVIGATE'
     }
 }
+
+export const myTeamsNavigate = () => {
+    return {
+        type: 'MY_TEAMS_NAVIGATE'
+    }
+}

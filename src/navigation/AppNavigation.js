@@ -38,8 +38,8 @@ class AppNavigation extends Component {
     };
 
     render() {
-
         const { navigationState, dispatch, user } = this.props;
+        
         const state = user.token.length > 0
             ? navigationState.stateForLoggedIn
             : navigationState.stateForLoggedOut;
