@@ -10,7 +10,8 @@ export default class Login extends Component {
     static propTypes = {
         logout: PropTypes.func.isRequired,
         navigateToMatches: PropTypes.func.isRequired,
-        navigateToTeams: PropTypes.func.isRequired
+        navigateToTeams: PropTypes.func.isRequired,
+        navigateToMyTeams: PropTypes.func.isRequired
     }
 
     render() {
@@ -30,6 +31,13 @@ export default class Login extends Component {
                         <MenuItem
                             title='Teams'
                             navigateTo={this.props.navigateToTeams}
+                        /> : null
+                }
+                {
+                    activeItem !== 'myTeams' ?
+                        <MenuItem
+                            title='My teams'
+                            navigateTo={this.props.navigateToMyTeams}
                         /> : null
                 }
                 <MenuItem

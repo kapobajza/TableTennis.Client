@@ -63,6 +63,15 @@ const navigation = (state = initialState, action) => {
                 )
             };
 
+        case "MY_TEAMS_NAVIGATE":
+            return {
+                ...state,
+                stateForLoggedIn: AppNavigator.router.getStateForAction(
+                    AppNavigator.router.getActionForPathAndParams("mainScreen/myTeams"),
+                    stateForLoggedIn
+                )
+            };
+
         default:
             return {
                 ...state,

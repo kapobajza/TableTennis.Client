@@ -12,16 +12,16 @@ export default class Api {
         const url = `${host}${route}`;
         let options = Object.assign({ method: verb }, params ? { body: JSON.stringify(params) } : null);
         options.headers = Api.headers();
-        
-        if(authorization != null) {
+
+        if (authorization != null) {
             options.headers.Authorization = authorization;
         }
 
         return fetch(url, options).then(resp => {
             if (resp.ok) {
                 let json = resp.json();
-                return json.then(json => json);
-            }     
+                return json.then(json => { return json; });
+            }
 
             let error = resp.text();
             return error.then(err => {

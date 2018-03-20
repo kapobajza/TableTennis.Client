@@ -1,6 +1,7 @@
 import { StackNavigator, DrawerNavigator, TabNavigator } from 'react-navigation';
 import LoginContainer from '../components/containers/LoginContainer';
 import TeamsContainer from '../components/containers/TeamsContainer';
+import MyTeamsContainer from '../components/containers/MyTeamsContainer';
 import MatchesContainer from '../components/containers/MatchesContainer';
 import MyMatchesContainer from '../components/containers/MyMatchesContainer';
 import RegisterContainer from '../components/containers/RegisterContainer';
@@ -15,6 +16,12 @@ const DrawerStack = DrawerNavigator({
         screen: TeamsContainer,
         navigationOptions: {
             title: 'Welcome'
+        }
+    },
+    myTeams: {
+        screen: MyTeamsContainer,
+        navigationOptions: {
+            title: 'Your teams'
         }
     },
     matches: {

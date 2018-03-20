@@ -23,6 +23,17 @@ const styles = StyleSheet.create({
     customText: {
         color: '#7e6aaf',
         fontSize: 16
+    },
+    textInput: {
+        width: 300,
+        textAlign: 'center',
+        marginBottom: 10
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 50,
+        textAlign: 'center'
     }
 });
 
